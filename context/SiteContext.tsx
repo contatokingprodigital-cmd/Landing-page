@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 export interface FeedbackItem {
@@ -15,7 +16,6 @@ export interface Plan {
   popular: boolean;
 }
 
-// Added missing ServiceItem interface to resolve import error in AdminDashboard.tsx
 export interface ServiceItem {
   title: string;
   description: string;
@@ -31,7 +31,6 @@ export interface SiteContent {
   methodologyPersuasiveText: string;
   partnersTitle: string;
   partnerLogos: string[];
-  // Added missing service fields used by AdminDashboard.tsx
   servicesTitle: string;
   servicesSubtitle: string;
   services: ServiceItem[];
@@ -55,6 +54,7 @@ export interface SiteContent {
   footerDescription: string;
   seoTitle?: string;
   seoDescription?: string;
+  seoKeywords?: string;
 }
 
 export interface Lead {
@@ -107,7 +107,6 @@ const defaultContent: SiteContent = {
     "https://i.ibb.co/WvrNbsX2/cockpit.png",
     "https://i.ibb.co/53sYPMf/Design-sem-nome.png"
   ],
-  // Added default values for missing service fields
   servicesTitle: "O que fazemos pelo seu negócio",
   servicesSubtitle: "Nossa atuação vai muito além de apertar botões. Construímos o ecossistema necessário para sua escala.",
   services: [
@@ -158,6 +157,9 @@ const defaultContent: SiteContent = {
   contactEmail: "contatokingprodigital@gmail.com",
   instagramHandle: "kingprodigital",
   footerDescription: "Transformando negócios em autoridades digitais através do tráfego pago.",
+  seoTitle: "King Pro Digital | Tráfego Pago Estratégico",
+  seoDescription: "Agência especializada em tráfego pago estratégico, performance e escala de faturamento para negócios reais.",
+  seoKeywords: "tráfego pago, gestor de tráfego, marketing digital, meta ads, google ads, king pro digital, agência de marketing, escala de vendas"
 };
 
 const SiteContext = createContext<SiteContextType | undefined>(undefined);

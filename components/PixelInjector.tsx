@@ -1,6 +1,6 @@
 
 import React, { useEffect } from 'react';
-import { useSite } from '../context/SiteContext';
+import { useSite } from '../SiteContext';
 
 const PixelInjector: React.FC = () => {
   const { pixels } = useSite();

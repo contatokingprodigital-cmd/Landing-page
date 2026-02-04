@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 export interface FeedbackItem {
   url: string;
@@ -30,9 +30,23 @@ export interface Pixels {
   metaPixel: string;
 }
 
+export interface Lead {
+  id: string;
+  name: string;
+  email: string;
+  message: string;
+  date: string;
+}
+
+export interface Analytics {
+  pageViews: number;
+  buttonClicks: Record<string, number>;
+}
+
 export interface SiteContent {
   seoTitle: string;
   seoDescription: string;
+  seoKeywords: string;
   heroTitle: string;
   heroSubtitle: string;
   heroImage: string;
@@ -75,21 +89,22 @@ export interface SiteContent {
   contactButtonText: string;
 }
 
-const content: SiteContent = {
-  seoTitle: "King Pro Digital | Tráfego Pago Estratégico e Performance",
-  seoDescription: "Pare de depender da sorte. Na King Pro Digital, construímos máquinas de vendas previsíveis através de tráfego pago estratégico e inteligência de dados.",
+const defaultContent: SiteContent = {
+  seoTitle: "King Pro Digital | Agência de Tráfego Pago e Marketing de Escala",
+  seoDescription: "A King Pro Digital é sua agência de marketing especialista em tráfego pago estratégico. Atendemos Porto Alegre, Alvorada, São Paulo, Rio de Janeiro e Santa Catarina. Geramos vendas reais com Meta e Google Ads.",
+  seoKeywords: "king pro digital, agência de marketing, tráfego pago, porto alegre, alvorada, são paulo, santa catarina, rio de janeiro, gestor de trafego pago, marketing digital rs, marketing digital sp, marketing digital rj",
   heroTitle: "Mais clientes mais vendas. Tráfego pago com estratégia.",
-  heroSubtitle: "Pare de depender da sorte. Na King Pro Digital, Nós não vendemos cliques. Criamos estratégias de tráfego pago focadas em faturamento previsível para negócios que querem crescer de verdade.",
+  heroSubtitle: "A King Pro Digital transforma seu investimento em lucro real. Atuamos em Porto Alegre, Alvorada e em todo o Brasil (SP, RJ, SC) com gestão de tráfego pago de alta performance para empresas que buscam escala.",
   heroImage: "https://i.ibb.co/jZy4rCHY/king-logo.png",
   methodologyLabel: "O Método King Pro",
   methodologyTitle: "A Metodologia que Separa Amadores de Profissionais.",
-  methodologyPersuasiveText: "Enquanto outros focam em 'cliques', nós focamos em lucro. Nossa estratégia é desenhada para negócios que não aceitam resultados medianos e buscam escala real no faturamento.",
+  methodologyPersuasiveText: "Enquanto outros focam em 'cliques', nós focamos em lucro. Nossa estratégia é desenhada para negócios que não aceitam resultados medianos e buscam escala real no faturamento em qualquer região do Brasil.",
   methodologySubtitle: "Os 4 Pilares da Dominação Digital King Pro.",
   pillars: [
     { icon: "📊", title: "Inteligência de Dados", desc: "Não operamos no escuro. Nossas decisões são baseadas em métricas reais e tracking avançado." },
     { icon: "🎯", title: "Criativos de Alta Retenção", desc: "Desenvolvemos anúncios que param a rolagem e obrigam o seu cliente ideal a clicar." },
     { icon: "🚀", title: "Escala Previsível", desc: "Estruturamos campanhas de vendas preparadas para receber investimento agressivo e gerar lucro." },
-    { icon: "👑", title: "Gestão de Elite", desc: "Acompanhamento e otimizações diárias por especialistas que entendem de estratégia de negócio." }
+    { icon: "👑", title: "Gestão de Elite", desc: "Acompanhamento e otimizações diárias por especialistas que atendem Porto Alegre, Alvorada e grandes centros como SP e RJ." }
   ],
   partnersTitle: "Empresas que confiam na nossa gestão",
   partnerLogos: [
@@ -106,34 +121,34 @@ const content: SiteContent = {
     "https://i.ibb.co/MDhX3dQm/mundi-m-veis.png"
   ],
   servicesTitle: "O que fazemos pelo seu negócio",
-  servicesSubtitle: "Nossa atuação vai muito além de apertar botões. Construímos o ecossistema necessário para sua escala.",
+  servicesSubtitle: "Especialistas em tráfego pago estratégico para empresas de Porto Alegre, Alvorada e todo o território nacional.",
   services: [
     { 
       title: "Gestão Estratégica de Tráfego", 
-      description: "Configuramos e otimizamos suas campanhas no Meta Ads (Instagram/Facebook) e Google Ads com foco total em ROI e CPA baixo.",
+      description: "Otimizamos suas campanhas no Meta Ads e Google Ads com foco total em ROI para mercados competitivos como SP, RJ e SC.",
       imageUrl: "https://i.ibb.co/0pYFWGYP/Sem-nome-1000-x-800-px.png"
     },
     { 
       title: "Criação de Criativos", 
-      description: "Desenvolvemos anúncios magnéticos com copy persuasiva e design focado em reter a atenção do cliente.",
+      description: "Anúncios magnéticos que convertem. Nossa agência de marketing entrega copy e design de elite.",
       imageUrl: "https://i.ibb.co/r2Ndyr8x/Gemini-Generated-Image-jhk8u3jhk8u3jhk8.png" 
     },
     { 
       title: "Landing Pages", 
-      description: "Criamos páginas para anúncios com alta captura de leads e conversões",
+      description: "Desenvolvemos páginas de alta conversão para maximizar o tráfego pago da sua empresa.",
       imageUrl: "https://i.ibb.co/1YzMSN1M/Gemini-Generated-Image-b01arab01arab01a.png"
     },
     { 
       title: "Relatórios Automatizados", 
-      description: "Transparencia total dos resultados para que você saiba exatamente seu lucro.",
+      description: "Transparência total. Saiba exatamente quanto lucro nossa gestão de tráfego está gerando.",
       imageUrl: "https://i.ibb.co/GNJjyF1/Design-sem-nome.png"
     }
   ],
   instagramSectionTitle: "King Pro em Ação",
-  instagramSectionSubtitle: "Acompanhe nossos bastidores e estratégias exclusivas.",
-  instagramVideoUrls: ["https://www.instagram.com/p/DBitf15R-6P/"],
+  instagramSectionSubtitle: "Acompanhe nossos bastidores e estratégias que estão dominando o mercado.",
+  instagramVideoUrls: ["https://www.instagram.com/p/DUV3963ACeL","https://www.instagram.com/p/DGEoD1XRrYP","https://www.instagram.com/p/DPtypF4ABnG"],
   feedbackSectionTitle: "A Voz de quem Cresce Conosco",
-  feedbackSectionSubtitle: "Veja abaixo conversas diretas com nossos clientes.",
+  feedbackSectionSubtitle: "Empresas de Porto Alegre, Alvorada e SP que escalaram com a King Pro Digital.",
   feedbackButtonText: "QUERO RESULTADOS ASSIM NO MEU NEGÓCIO",
   feedbacks: [
     { url: "https://i.ibb.co/93YW9FSR/1.png", caption: "Representação de 30% do faturamento", alt: "Feedback 1" },
@@ -143,17 +158,17 @@ const content: SiteContent = {
   whatsappLink: "https://wa.me/5551993781978",
   contactEmail: "contatokingprodigital@gmail.com",
   instagramHandle: "kingprodigital",
-  footerDescription: "Transformando negócios em autoridades digitais através do tráfego pago de alta performance.",
-  finalCtaQuestion: "Quer saber se funciona para você?",
+  footerDescription: "King Pro Digital: Agência de Marketing em Porto Alegre e Alvorada. Especialista em Tráfego Pago em SP, RJ e SC. Transformamos anúncios em máquinas de vendas.",
+  finalCtaQuestion: "Pronto para dominar seu mercado?",
   finalCtaOffer: "Análise estratégica gratuita.",
-  finalCtaPath: "Mostramos o caminho mais curto até as vendas.",
+  finalCtaPath: "Atuamos em Porto Alegre, Alvorada, SP, RJ e SC.",
   finalCtaButton: "Quero agendar minha análise",
   processTitle: "Processo King Pro de Dominação",
   processSubtitle: "Três etapas simples para escalar seu faturamento com previsibilidade.",
   processSteps: [
-    { icon: "🔎", title: "Diagnóstico", desc: "Analisamos seu mercado e concorrentes." },
-    { icon: "⚙️", title: "Engenharia", desc: "Configuramos suas campanhas e ferramentas de rastreio." },
-    { icon: "📈", title: "Escalabilidade", desc: "Otimização diária para baixar seu custo por venda." }
+    { icon: "🔎", title: "Diagnóstico", desc: "Analisamos seu mercado regional e concorrentes nacionais." },
+    { icon: "⚙️", title: "Engenharia", desc: "Configuramos suas campanhas com tracking avançado por região." },
+    { icon: "📈", title: "Escalabilidade", desc: "Otimização diária para baixar seu custo por venda e aumentar o lucro." }
   ],
   transparencyTitle: "Total Transparência",
   transparencySubtitle: "Relacionamento baseado em resultados reais, sem letras miúdas.",
@@ -162,35 +177,109 @@ const content: SiteContent = {
   transparencyItem2Title: "Relatórios de Lucro",
   transparencyItem2Desc: "Focamos em métricas que realmente importam: ROI e ROAS.",
   contactSectionTitle: "Pronto para ser o próximo Líder?",
-  contactSectionSubtitle: "Deixe seus dados e nossa equipe entrará em contato.",
+  contactSectionSubtitle: "Agência de marketing focada em resultados. Deixe seus dados e entraremos em contato.",
   contactButtonText: "Quero uma Consultoria",
 };
 
 interface SiteContextType {
   content: SiteContent;
+  leads: Lead[];
+  analytics: Analytics;
   pixels: Pixels;
+  updateContent: (newContent: SiteContent) => void;
+  updatePixels: (newPixels: Pixels) => void;
+  addLead: (lead: Omit<Lead, 'id' | 'date'>) => void;
   trackEvent: (eventName: string) => void;
-  addLead: (lead: any) => void;
+  clearAnalytics: () => void;
+  resetToDefault: () => void;
 }
 
 const SiteContext = createContext<SiteContextType | undefined>(undefined);
 
 export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const addLead = useCallback((lead: any) => {
-    console.log(`[King Pro Lead]:`, lead);
+  const [content, setContent] = useState<SiteContent>(() => {
+    try {
+      const saved = typeof window !== 'undefined' ? localStorage.getItem('kingpro_content_v46') : null;
+      return saved ? { ...defaultContent, ...JSON.parse(saved) } : defaultContent;
+    } catch (e) {
+      console.error("Erro ao carregar conteúdo:", e);
+      return defaultContent;
+    }
+  });
+
+  const [leads, setLeads] = useState<Lead[]>(() => {
+    try {
+      const saved = typeof window !== 'undefined' ? localStorage.getItem('kingpro_leads') : null;
+      return saved ? JSON.parse(saved) : [];
+    } catch { return []; }
+  });
+
+  const [analytics, setAnalytics] = useState<Analytics>(() => {
+    try {
+      const saved = typeof window !== 'undefined' ? localStorage.getItem('kingpro_analytics') : null;
+      return saved ? JSON.parse(saved) : { pageViews: 0, buttonClicks: {} };
+    } catch { return { pageViews: 0, buttonClicks: {} }; }
+  });
+
+  const [pixels, setPixels] = useState<Pixels>(() => {
+    try {
+      const saved = typeof window !== 'undefined' ? localStorage.getItem('kingpro_pixels') : null;
+      return saved ? JSON.parse(saved) : { googlePixel: '', metaPixel: '' };
+    } catch { return { googlePixel: '', metaPixel: '' }; }
+  });
+
+  const updateContent = (newContent: SiteContent) => {
+    setContent(newContent);
+    try { localStorage.setItem('kingpro_content_v46', JSON.stringify(newContent)); } catch(e) {}
+  };
+
+  const updatePixels = (newPixels: Pixels) => {
+    setPixels(newPixels);
+    try { localStorage.setItem('kingpro_pixels', JSON.stringify(newPixels)); } catch(e) {}
+  };
+
+  const resetToDefault = () => {
+    if(confirm("Deseja realmente resetar?")) {
+      localStorage.removeItem('kingpro_content_v46');
+      window.location.reload();
+    }
+  };
+
+  const addLead = useCallback((leadData: Omit<Lead, 'id' | 'date'>) => {
+    const newLead: Lead = {
+      ...leadData,
+      id: Math.random().toString(36).substr(2, 9),
+      date: new Date().toLocaleString('pt-BR'),
+    };
+    setLeads(prev => {
+      const updated = [newLead, ...prev];
+      try { localStorage.setItem('kingpro_leads', JSON.stringify(updated)); } catch(e) {}
+      return updated;
+    });
   }, []);
 
   const trackEvent = useCallback((eventName: string) => {
-    console.log(`[King Pro Analytics]: ${eventName}`);
+    setAnalytics(prev => {
+      const updated = eventName === 'page_view' 
+        ? { ...prev, pageViews: prev.pageViews + 1 }
+        : { ...prev, buttonClicks: { ...prev.buttonClicks, [eventName]: (prev.buttonClicks[eventName] || 0) + 1 } };
+      try { localStorage.setItem('kingpro_analytics', JSON.stringify(updated)); } catch(e) {}
+      return updated;
+    });
   }, []);
 
-  const pixels: Pixels = {
-    googlePixel: "",
-    metaPixel: ""
+  const clearAnalytics = () => {
+    const reset = { pageViews: 0, buttonClicks: {} };
+    setAnalytics(reset);
+    localStorage.setItem('kingpro_analytics', JSON.stringify(reset));
   };
 
   return (
-    <SiteContext.Provider value={{ content, pixels, trackEvent, addLead }}>
+    <SiteContext.Provider value={{ 
+      content, leads, analytics, pixels, 
+      updateContent, updatePixels, addLead, trackEvent, 
+      clearAnalytics, resetToDefault 
+    }}>
       {children}
     </SiteContext.Provider>
   );
