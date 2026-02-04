@@ -9,23 +9,28 @@
     
     <style>
       /* Previne tela preta absoluta */
-      body { background-color: #000; margin: 0; padding: 0; min-height: 100vh; color: white; display: flex; flex-direction: column; }
-      #root { flex: 1; display: flex; flex-direction: column; }
+      body { background-color: #000; margin: 0; padding: 0; min-height: 100vh; color: white; display: flex; flex-direction: column; overflow-x: hidden; }
+      #root { flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
       
-      /* Indicador de carregamento inicial */
+      /* Indicador de carregamento inicial otimizado */
       #initial-loader {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         background: #000; display: flex; flex-direction: column;
         align-items: center; justify-content: center; z-index: 9999;
+        transition: opacity 0.5s ease;
       }
       .spinner {
-        width: 40px; height: 40px; border: 4px solid rgba(191,149,63,0.1);
-        border-top: 4px solid #BF953F; border-radius: 50%;
-        animation: spin 1s linear infinite; margin-bottom: 20px;
+        width: 50px; height: 50px; border: 3px solid rgba(191,149,63,0.1);
+        border-top: 3px solid #BF953F; border-radius: 50%;
+        animation: spin 0.8s linear infinite; margin-bottom: 20px;
       }
       @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-      .loader-text { color: #BF953F; font-family: sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
+      .loader-text { color: #BF953F; font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; animation: pulse 1.5s ease-in-out infinite; }
+      @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
     </style>
+
+    <!-- Polyfill para garantir que importmap funcione em todos os celulares (iOS < 16.4) -->
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.10.0/dist/es-module-shims.js"></script>
 
     <script type="importmap">
 {
@@ -39,7 +44,6 @@
 }
 </script>
     
-    <!-- Tailwind Carregado de forma assíncrona para não travar o mobile -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -61,24 +65,25 @@
     
     <div id="root"></div>
 
+    <!-- Script principal carregado explicitamente como módulo -->
+    <script type="module" src="./index.tsx"></script>
+
     <script>
-        // Unregister old broken service workers that cause black screens
+        // Limpeza agressiva de Service Workers antigos que podem estar travando o cache
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.getRegistrations().then(function(registrations) {
-                for(let registration of registrations) {
-                    registration.unregister();
-                }
+                for(let registration of registrations) { registration.unregister(); }
             });
         }
         
-        // Remove loader when React mounts
-        window.addEventListener('load', () => {
-            // Pequeno delay para garantir que o React teve tempo de iniciar
-            setTimeout(() => {
-              const loader = document.getElementById('initial-loader');
-              if (loader) loader.style.display = 'none';
-            }, 1500);
-        });
+        // Timeout de segurança: Se o React não carregar em 6 segundos, removemos o loader à força
+        setTimeout(() => {
+            const loader = document.getElementById('initial-loader');
+            if (loader && loader.style.display !== 'none') {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 500);
+            }
+        }, 6000);
     </script>
 <script type="module" src="/index.tsx"></script>
 </body>
