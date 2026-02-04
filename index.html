@@ -1,72 +1,26 @@
 
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="pt-BR" class="scroll-smooth bg-black">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     
+    <style>
+      /* Estilo crítico para evitar tela branca antes do React carregar */
+      body { background-color: #000; margin: 0; min-height: 100vh; }
+      #root { min-height: 100vh; display: flex; flex-direction: column; }
+    </style>
+
     <!-- SEO Primário -->
     <title>King Pro Digital | Tráfego Pago Estratégico e Performance</title>
     <meta name="description" content="Especialistas em tráfego pago focado em faturamento. Escalamos seu negócio com Meta Ads e Google Ads usando estratégia e inteligência de dados.">
     <meta name="keywords" content="tráfego pago, marketing digital, agência de performance, gestor de tráfego, meta ads, google ads, king pro digital">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://kingprodigital.com.br">
-    
-    <!-- Open Graph / Facebook / WhatsApp -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://kingprodigital.com.br">
-    <meta property="og:title" content="King Pro Digital | Tráfego Pago Estratégico">
-    <meta property="og:description" content="Não vendemos cliques, entregamos lucro. Conheça nossa metodologia de escala para negócios de elite.">
-    <meta property="og:image" content="https://i.ibb.co/jZy4rCHY/king-logo.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://kingprodigital.com.br">
-    <meta property="twitter:title" content="King Pro Digital | Tráfego Pago Estratégico">
-    <meta property="twitter:description" content="Estratégia avançada de tráfego pago para quem busca escala real de faturamento.">
-    <meta property="twitter:image" content="https://i.ibb.co/jZy4rCHY/king-logo.png">
-
-    <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": "King Pro Digital",
-      "image": "https://i.ibb.co/jZy4rCHY/king-logo.png",
-      "@id": "https://kingprodigital.com.br",
-      "url": "https://kingprodigital.com.br",
-      "telephone": "+5551993781978",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Atendimento Online e Nacional",
-        "addressLocality": "Brasil",
-        "addressCountry": "BR"
-      },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday"
-        ],
-        "opens": "09:00",
-        "closes": "18:00"
-      },
-      "sameAs": [
-        "https://instagram.com/kingprodigital"
-      ],
-      "priceRange": "$$$"
-    }
-    </script>
     
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#000000">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="King Pro">
     <link rel="apple-touch-icon" href="https://i.ibb.co/jZy4rCHY/king-logo.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -84,7 +38,6 @@
         .nav-link { position: relative; transition: color 0.3s; }
         .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background: linear-gradient(90deg, #BF953F, #FCF6BA); transition: width 0.3s; }
         .nav-link:hover::after { width: 100%; }
-        @media (display-mode: standalone) { header { padding-top: env(safe-area-inset-top); } }
     </style>
 <script type="importmap">
 {
@@ -103,8 +56,8 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
-                    .then(reg => console.log('Service Worker registrado!', reg))
-                    .catch(err => console.error('Falha ao registrar SW', err));
+                    .then(reg => console.log('SW ativo!'))
+                    .catch(err => console.error('Erro SW:', err));
             });
         }
     </script>
