@@ -34,6 +34,10 @@ export interface Plan {
 }
 
 export interface SiteContent {
+  // SEO
+  seoTitle: string;
+  seoDescription: string;
+  
   heroTitle: string;
   heroSubtitle: string;
   heroImage: string;
@@ -74,7 +78,6 @@ export interface SiteContent {
   plansSectionTitle: string;
   plansSectionSubtitle: string;
   plans: Plan[];
-  // Fix: Added missing Final CTA fields to SiteContent interface to satisfy components/FinalCTA.tsx requirements
   finalCtaQuestion: string;
   finalCtaOffer: string;
   finalCtaPath: string;
@@ -113,6 +116,9 @@ interface SiteContextType {
 }
 
 const defaultContent: SiteContent = {
+  seoTitle: "King Pro Digital | Tráfego Pago Estratégico e Performance",
+  seoDescription: "Pare de depender da sorte. Na King Pro Digital, construímos máquinas de vendas previsíveis através de tráfego pago estratégico e inteligência de dados.",
+  
   heroTitle: "Mais clientes mais vendas. Tráfego pago com estratégia.",
   heroSubtitle: "Pare de depender da sorte. Na King Pro Digital, Nós não vendemos cliques. Criamos estratégias de tráfego pago focadas em faturamento previsível para negócios que querem crescer de verdade.",
   heroImage: "https://i.ibb.co/jZy4rCHY/king-logo.png",
@@ -222,7 +228,6 @@ const defaultContent: SiteContent = {
       features: ["Inclui King Pro +", "Meta + Google Ads", "Funil e Script de Vendas"] 
     },
   ],
-  // Fix: Added missing Final CTA default values to defaultContent to ensure compilation in FinalCTA component
   finalCtaQuestion: "Quer saber se o tráfego pago funciona para o seu negócio?",
   finalCtaOffer: "Agende agora uma análise estratégica gratuita.",
   finalCtaPath: "Vamos olhar seus números, seu mercado e te mostrar o caminho mais curto até mais vendas.",
@@ -233,7 +238,7 @@ const SiteContext = createContext<SiteContextType | undefined>(undefined);
 
 export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [content, setContent] = useState<SiteContent>(() => {
-    const saved = localStorage.getItem('kingpro_content_v11');
+    const saved = localStorage.getItem('kingpro_content_v12');
     if (saved) return { ...defaultContent, ...JSON.parse(saved) };
     return defaultContent;
   });
@@ -255,7 +260,7 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const updateContent = (newContent: SiteContent) => {
     setContent(newContent);
-    localStorage.setItem('kingpro_content_v11', JSON.stringify(newContent));
+    localStorage.setItem('kingpro_content_v12', JSON.stringify(newContent));
   };
 
   const updatePixels = (newPixels: Pixels) => {
@@ -265,7 +270,7 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const resetToDefault = () => {
     if(confirm("Deseja realmente resetar tudo para o padrão?")) {
-      localStorage.removeItem('kingpro_content_v11');
+      localStorage.removeItem('kingpro_content_v12');
       window.location.reload();
     }
   };

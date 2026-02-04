@@ -1,7 +1,12 @@
+
 import React from 'react';
 import { useSite } from '../SiteContext';
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  onAdminClick?: () => void;
+}
+
+const Footer: React.FC<FooterProps> = ({ onAdminClick }) => {
   const { content, trackEvent } = useSite();
 
   return (
@@ -41,6 +46,12 @@ const Footer: React.FC = () => {
           <div className="flex justify-center gap-8 text-[10px] text-gray-600 uppercase tracking-widest">
             <a href="#" className="hover:text-amber-500 transition-colors">Privacidade</a>
             <a href="#" className="hover:text-amber-500 transition-colors">Termos</a>
+            <button 
+              onClick={onAdminClick}
+              className="hover:text-amber-500 transition-colors opacity-30 hover:opacity-100"
+            >
+              Acesso Administrativo
+            </button>
           </div>
         </div>
       </div>

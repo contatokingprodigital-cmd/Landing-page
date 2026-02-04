@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+
+import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Timeline from './components/Timeline';
@@ -8,11 +9,29 @@ import Feedback from './components/Feedback';
 import PartnersCarousel from './components/PartnersCarousel';
 import FinalCTA from './components/FinalCTA';
 import Footer from './components/Footer';
+import AdminDashboard from './AdminDashboard';
 import { SiteProvider, useSite } from './SiteContext';
 import PixelInjector from './PixelInjector';
 
+const SEOUpdater: React.FC = () => {
+  const { content } = useSite();
+  
+  useEffect(() => {
+    if (content.seoTitle) {
+      document.title = content.seoTitle;
+    }
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc && content.seoDescription) {
+      metaDesc.setAttribute('content', content.seoDescription);
+    }
+  }, [content.seoTitle, content.seoDescription]);
+
+  return null;
+};
+
 const MainLandingPage: React.FC = () => {
   const { trackEvent } = useSite();
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
 
   useEffect(() => {
     trackEvent('page_view');
@@ -30,7 +49,11 @@ const MainLandingPage: React.FC = () => {
         <Feedback />
         <FinalCTA />
       </main>
-      <Footer />
+      <Footer onAdminClick={() => setIsAdminOpen(true)} />
+      
+      {isAdminOpen && (
+        <AdminDashboard onClose={() => setIsAdminOpen(false)} />
+      )}
     </div>
   );
 };
@@ -39,6 +62,7 @@ const App: React.FC = () => {
   return (
     <SiteProvider>
       <PixelInjector />
+      <SEOUpdater />
       <MainLandingPage />
     </SiteProvider>
   );
