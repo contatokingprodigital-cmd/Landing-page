@@ -94,7 +94,7 @@ const defaultContent: SiteContent = {
   seoDescription: "A King Pro Digital é sua agência de marketing especialista em tráfego pago estratégico. Atendemos Porto Alegre, Alvorada, São Paulo, Rio de Janeiro e Santa Catarina. Geramos vendas reais com Meta e Google Ads.",
   seoKeywords: "king pro digital, agência de marketing, tráfego pago, porto alegre, alvorada, são paulo, santa catarina, rio de janeiro, gestor de trafego pago, marketing digital rs, marketing digital sp, marketing digital rj",
   heroTitle: "Mais clientes mais vendas. Tráfego pago com estratégia.",
-  heroSubtitle: "A King Pro Digital transforma seu investimento em lucro real. Atuamos em Porto Alegre, Alvorada e em todo o Brasil (SP, RJ, SC) com gestão de tráfego pago de alta performance para empresas que buscam escala.",
+  heroSubtitle: "Pare de depender da sorte. Na King Pro Digital, Nós não vendemos cliques. Criamos estratégias de tráfego pago focadas em faturamento previsível para negócios que querem crescer de verdade.",
   heroImage: "https://i.ibb.co/jZy4rCHY/king-logo.png",
   methodologyLabel: "O Método King Pro",
   methodologyTitle: "A Metodologia que Separa Amadores de Profissionais.",
@@ -121,11 +121,11 @@ const defaultContent: SiteContent = {
     "https://i.ibb.co/MDhX3dQm/mundi-m-veis.png"
   ],
   servicesTitle: "O que fazemos pelo seu negócio",
-  servicesSubtitle: "Especialistas em tráfego pago estratégico para empresas de Porto Alegre, Alvorada e todo o território nacional.",
+  servicesSubtitle: "Nossa atuação vai muito além de apertar botões. Construímos o ecossistema necessário para sua escala.",
   services: [
     { 
       title: "Gestão Estratégica de Tráfego", 
-      description: "Otimizamos suas campanhas no Meta Ads e Google Ads com foco total em ROI para mercados competitivos como SP, RJ e SC.",
+      description: "Configuramos e otimizamos suas campanhas no Meta Ads (Instagram/Facebook) e Google Ads com foco total em ROI e CPA baixo.",
       imageUrl: "https://i.ibb.co/0pYFWGYP/Sem-nome-1000-x-800-px.png"
     },
     { 
@@ -145,10 +145,10 @@ const defaultContent: SiteContent = {
     }
   ],
   instagramSectionTitle: "King Pro em Ação",
-  instagramSectionSubtitle: "Acompanhe nossos bastidores e estratégias que estão dominando o mercado.",
+  instagramSectionSubtitle: "Acompanhe nossos bastidores.",
   instagramVideoUrls: ["https://www.instagram.com/p/DUV3963ACeL","https://www.instagram.com/p/DGEoD1XRrYP","https://www.instagram.com/p/DPtypF4ABnG"],
   feedbackSectionTitle: "A Voz de quem Cresce Conosco",
-  feedbackSectionSubtitle: "Empresas de Porto Alegre, Alvorada e SP que escalaram com a King Pro Digital.",
+  feedbackSectionSubtitle: "Veja abaixo conversas diretas com nossos clientes.",
   feedbackButtonText: "QUERO RESULTADOS ASSIM NO MEU NEGÓCIO",
   feedbacks: [
     { url: "https://i.ibb.co/93YW9FSR/1.png", caption: "Representação de 30% do faturamento", alt: "Feedback 1" },
@@ -158,10 +158,10 @@ const defaultContent: SiteContent = {
   whatsappLink: "https://wa.me/5551993781978",
   contactEmail: "contatokingprodigital@gmail.com",
   instagramHandle: "kingprodigital",
-  footerDescription: "King Pro Digital: Agência de Marketing em Porto Alegre e Alvorada. Especialista em Tráfego Pago em SP, RJ e SC. Transformamos anúncios em máquinas de vendas.",
+  footerDescription: "King Pro Digital: Agência de Marketing Especialista em Tráfego Pago. Transformamos anúncios em máquinas de vendas. Atendemos todo Brasil, Porto Alegre/RS, SP, RJ e SC.",
   finalCtaQuestion: "Pronto para dominar seu mercado?",
   finalCtaOffer: "Análise estratégica gratuita.",
-  finalCtaPath: "Atuamos em Porto Alegre, Alvorada, SP, RJ e SC.",
+  finalCtaPath: "Transformando negócios em autoridades digitais através do tráfego pago de alta performance.",
   finalCtaButton: "Quero agendar minha análise",
   processTitle: "Processo King Pro de Dominação",
   processSubtitle: "Três etapas simples para escalar seu faturamento com previsibilidade.",
