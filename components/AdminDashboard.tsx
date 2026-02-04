@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useSite, SiteContent, Pixels, Plan } from '../context/SiteContext';
+import { useSite, SiteContent, Pixels, Plan, ServiceItem } from '../context/SiteContext';
 
 interface AdminDashboardProps {
   onClose: () => void;
@@ -19,6 +19,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
   const logoInputRef = useRef<HTMLInputElement>(null);
   const feedbackInputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const partnerInputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const serviceInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {
     setTempContent(content);
@@ -30,7 +31,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
     else alert('Senha incorreta!');
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, target: 'logo' | { type: 'feedback' | 'partner', index: number }) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, target: 'logo' | { type: 'feedback' | 'partner' | 'service', index: number }) => {
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > 2 * 1024 * 1024) { return alert("Arquivo muito grande! Máximo 2MB."); }
@@ -46,6 +47,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
           const n = [...tempContent.partnerLogos];
           n[target.index] = base64;
           setTempContent({ ...tempContent, partnerLogos: n });
+        } else if (target.type === 'service') {
+          const n = [...tempContent.services];
+          n[target.index] = { ...n[target.index], imageUrl: base64 };
+          setTempContent({ ...tempContent, services: n });
         }
       };
       reader.readAsDataURL(file);
@@ -62,12 +67,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
   const handleRemovePartner = (index: number) => {
     const newLogos = tempContent.partnerLogos.filter((_, i) => i !== index);
     setTempContent({ ...tempContent, partnerLogos: newLogos });
-  };
-
-  const handlePlanChange = (idx: number, field: keyof Plan, value: any) => {
-    const n = [...tempContent.plans];
-    n[idx] = { ...n[idx], [field]: value };
-    setTempContent({ ...tempContent, plans: n });
   };
 
   const handleSave = () => {
@@ -126,7 +125,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
 
           {activeTab === 'content' && (
             <div className="space-y-16 animate-fade-in">
-              {/* Seção Identidade */}
+              {/* Identidade */}
               <section className="space-y-6">
                 <h2 className="text-xl font-black uppercase gold-gradient">1. Identidade & Global</h2>
                 <div className="p-8 bg-zinc-900/40 rounded-3xl border border-white/5 grid gap-6">
@@ -141,105 +140,36 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                       <button onClick={() => logoInputRef.current?.click()} className="gold-bg text-black text-[10px] font-black px-6 py-3 rounded-xl uppercase w-full md:w-auto">Upload Novo Logo</button>
                     </div>
                   </div>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="text-[10px] uppercase text-gray-500 font-bold">WhatsApp Link</label>
-                      <input type="text" className="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-white text-xs" value={tempContent.whatsappLink} onChange={e => setTempContent({...tempContent, whatsappLink: e.target.value})} />
-                    </div>
-                    <div>
-                      <label className="text-[10px] uppercase text-gray-500 font-bold">E-mail de Contato</label>
-                      <input type="text" className="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-white text-xs" value={tempContent.contactEmail} onChange={e => setTempContent({...tempContent, contactEmail: e.target.value})} />
-                    </div>
-                  </div>
                 </div>
               </section>
 
-              {/* Seção Hero & Metodologia */}
+              {/* Seção O Que Fazemos */}
               <section className="space-y-6">
-                <h2 className="text-xl font-black uppercase gold-gradient">2. Textos do Hero & Metodologia</h2>
-                <div className="p-8 bg-zinc-900/40 rounded-3xl border border-white/5 space-y-6">
-                  <div>
-                    <label className="text-[10px] uppercase text-gray-500 font-bold">Título Hero</label>
-                    <input type="text" className="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-white text-sm" value={tempContent.heroTitle} onChange={e => setTempContent({...tempContent, heroTitle: e.target.value})} />
-                  </div>
-                  <div>
-                    <label className="text-[10px] uppercase text-gray-500 font-bold">Subtítulo Hero</label>
-                    <textarea className="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-white text-sm h-24" value={tempContent.heroSubtitle} onChange={e => setTempContent({...tempContent, heroSubtitle: e.target.value})} />
-                  </div>
-                  <div className="pt-6 border-t border-white/5 space-y-6">
-                    <div>
-                      <label className="text-[10px] uppercase text-gray-500 font-bold">Título Metodologia</label>
-                      <input type="text" className="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-white text-sm" value={tempContent.methodologyTitle} onChange={e => setTempContent({...tempContent, methodologyTitle: e.target.value})} />
-                    </div>
-                    <div>
-                      <label className="text-[10px] uppercase text-gray-500 font-bold">Texto Persuasivo Metodologia</label>
-                      <textarea className="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-white text-sm h-32" value={tempContent.methodologyPersuasiveText} onChange={e => setTempContent({...tempContent, methodologyPersuasiveText: e.target.value})} />
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              {/* Seção Parceiros Dinâmica */}
-              <section className="space-y-6">
-                <div className="flex justify-between items-center">
-                   <h2 className="text-xl font-black uppercase gold-gradient">3. Carrossel de Parceiros</h2>
-                   <button onClick={handleAddPartner} className="text-[10px] bg-amber-500/10 border border-amber-500 text-amber-500 px-4 py-2 rounded-lg font-black hover:bg-amber-500 hover:text-black transition-all">+ ADD PARCEIRO</button>
-                </div>
-                <div className="p-8 bg-zinc-900/40 rounded-3xl border border-white/5 space-y-6">
-                  <div>
-                    <label className="text-[10px] uppercase text-gray-500 font-bold">Título da Seção de Parceiros</label>
-                    <input type="text" className="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-white text-sm" value={tempContent.partnersTitle} onChange={e => setTempContent({...tempContent, partnersTitle: e.target.value})} />
-                  </div>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                    {tempContent.partnerLogos.map((logo, idx) => (
-                      <div key={idx} className="relative space-y-2 group p-4 bg-black/20 rounded-2xl border border-white/5 hover:border-amber-500/20 transition-all">
-                        <button 
-                          onClick={() => handleRemovePartner(idx)}
-                          className="absolute -top-2 -right-2 bg-red-500 text-white w-6 h-6 rounded-full text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity z-10 flex items-center justify-center shadow-lg"
-                        >
-                          ✕
-                        </button>
-                        <div className="h-16 bg-black/60 flex items-center justify-center p-3 rounded-xl">
-                          <img src={logo} className="max-h-full grayscale opacity-50" onError={(e) => (e.target as HTMLImageElement).src = 'https://via.placeholder.com/150?text=Error'} />
-                        </div>
-                        <input type="text" className="w-full bg-black/40 text-[9px] p-2 rounded border border-white/5 text-white" value={logo} onChange={e => {
-                          const n = [...tempContent.partnerLogos]; n[idx] = e.target.value; setTempContent({...tempContent, partnerLogos: n});
-                        }} />
-                        <input type="file" className="hidden" ref={el => { partnerInputRefs.current[idx] = el; }} onChange={e => handleFileChange(e, {type: 'partner', index: idx})} />
-                        <button onClick={() => partnerInputRefs.current[idx]?.click()} className="w-full text-[8px] uppercase bg-white/5 py-2 rounded-lg font-bold hover:bg-white/10">Trocar Logo</button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </section>
-
-              {/* Seção Planos */}
-              <section className="space-y-6">
-                <h2 className="text-xl font-black uppercase gold-gradient">4. Configuração de Planos</h2>
+                <h2 className="text-xl font-black uppercase gold-gradient">2. Seção Serviços</h2>
                 <div className="p-8 bg-zinc-900/40 rounded-3xl border border-white/5 space-y-8">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="text-[10px] uppercase text-gray-500 font-bold">Título da Seção</label>
-                      <input type="text" className="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-white text-sm" value={tempContent.plansSectionTitle} onChange={e => setTempContent({...tempContent, plansSectionTitle: e.target.value})} />
-                    </div>
-                    <div>
-                      <label className="text-[10px] uppercase text-gray-500 font-bold">Subtítulo da Seção</label>
-                      <input type="text" className="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-white text-sm" value={tempContent.plansSectionSubtitle} onChange={e => setTempContent({...tempContent, plansSectionSubtitle: e.target.value})} />
-                    </div>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <input type="text" placeholder="Título da Seção" className="bg-black/60 p-3 rounded-lg text-xs text-white" value={tempContent.servicesTitle} onChange={e => setTempContent({...tempContent, servicesTitle: e.target.value})} />
+                    <input type="text" placeholder="Subtítulo da Seção" className="bg-black/60 p-3 rounded-lg text-xs text-white" value={tempContent.servicesSubtitle} onChange={e => setTempContent({...tempContent, servicesSubtitle: e.target.value})} />
                   </div>
                   <div className="space-y-8">
-                    {tempContent.plans.map((plan, pIdx) => (
-                      <div key={pIdx} className="p-6 bg-black/40 rounded-2xl border border-white/5 space-y-4">
-                        <h4 className="font-bold text-amber-500 text-xs">PLANO: {plan.name}</h4>
-                        <div className="grid md:grid-cols-2 gap-4">
-                          <input type="text" placeholder="Nome do Plano" className="bg-black/60 p-3 rounded-lg text-xs text-white" value={plan.name} onChange={e => handlePlanChange(pIdx, 'name', e.target.value)} />
-                          <input type="text" placeholder="Descrição Curta" className="bg-black/60 p-3 rounded-lg text-xs text-white" value={plan.description} onChange={e => handlePlanChange(pIdx, 'description', e.target.value)} />
-                          <input type="text" placeholder="Preço/Valor" className="bg-black/60 p-3 rounded-lg text-xs text-white font-bold" value={plan.price} onChange={e => handlePlanChange(pIdx, 'price', e.target.value)} />
-                          <input type="text" placeholder="Contrato" className="bg-black/60 p-3 rounded-lg text-xs text-white" value={plan.contract} onChange={e => handlePlanChange(pIdx, 'contract', e.target.value)} />
-                        </div>
-                        <div>
-                          <label className="text-[8px] uppercase text-gray-600 font-bold">Funcionalidades (separadas por vírgula)</label>
-                          <textarea className="w-full bg-black/60 p-3 rounded-lg text-xs text-white h-20 mt-1" value={plan.features.join(', ')} onChange={e => handlePlanChange(pIdx, 'features', e.target.value.split(',').map(s => s.trim()))} />
+                    {tempContent.services.map((service, sIdx) => (
+                      <div key={sIdx} className="p-6 bg-black/40 rounded-2xl border border-white/5 space-y-4">
+                        <div className="flex flex-col md:flex-row gap-6">
+                           <div className="md:w-1/3 space-y-4">
+                              <div className="aspect-video bg-black/60 border border-white/10 rounded-xl overflow-hidden">
+                                <img src={service.imageUrl} className="w-full h-full object-cover" />
+                              </div>
+                              <input type="file" className="hidden" ref={el => { serviceInputRefs.current[sIdx] = el; }} onChange={e => handleFileChange(e, {type: 'service', index: sIdx})} />
+                              <button onClick={() => serviceInputRefs.current[sIdx]?.click()} className="w-full gold-bg text-black text-[10px] font-black py-3 rounded-xl uppercase">Trocar Imagem</button>
+                           </div>
+                           <div className="md:w-2/3 space-y-4">
+                              <input type="text" placeholder="Título do Serviço" className="w-full bg-black/60 p-3 rounded-lg text-xs text-white" value={service.title} onChange={e => {
+                                const n = [...tempContent.services]; n[sIdx].title = e.target.value; setTempContent({...tempContent, services: n});
+                              }} />
+                              <textarea placeholder="Descrição" className="w-full bg-black/60 p-3 rounded-lg text-xs text-white h-24" value={service.description} onChange={e => {
+                                const n = [...tempContent.services]; n[sIdx].description = e.target.value; setTempContent({...tempContent, services: n});
+                              }} />
+                           </div>
                         </div>
                       </div>
                     ))}
@@ -247,24 +177,14 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                 </div>
               </section>
 
-              {/* Seção Feedback */}
+              {/* Feedbacks */}
               <section className="space-y-6">
-                <h2 className="text-xl font-black uppercase gold-gradient">5. Resultados & Feedbacks</h2>
+                <h2 className="text-xl font-black uppercase gold-gradient">3. Resultados & Feedbacks</h2>
                 <div className="p-8 bg-zinc-900/40 rounded-3xl border border-white/5 space-y-8">
-                   <div className="grid md:grid-cols-2 gap-6">
-                    <input type="text" placeholder="Título" className="bg-black/40 p-4 rounded-xl text-xs text-white border border-white/5" value={tempContent.feedbackSectionTitle} onChange={e => setTempContent({...tempContent, feedbackSectionTitle: e.target.value})} />
-                    <input type="text" placeholder="Subtítulo" className="bg-black/40 p-4 rounded-xl text-xs text-white border border-white/5" value={tempContent.feedbackSectionSubtitle} onChange={e => setTempContent({...tempContent, feedbackSectionSubtitle: e.target.value})} />
-                  </div>
                   <div className="grid md:grid-cols-3 gap-6">
                     {tempContent.feedbacks.map((f, idx) => (
                       <div key={idx} className="space-y-3 bg-black/40 p-4 rounded-2xl border border-white/5">
                         <div className="aspect-[3/4] bg-black/60 rounded-xl overflow-hidden mb-2"><img src={f.url} className="w-full h-full object-cover" /></div>
-                        <input type="text" className="w-full bg-black/60 p-2 text-[9px] text-white rounded" value={f.url} onChange={e => {
-                          const n = [...tempContent.feedbacks]; n[idx].url = e.target.value; setTempContent({...tempContent, feedbacks: n});
-                        }} placeholder="URL Imagem" />
-                        <input type="text" className="w-full bg-black/60 p-2 text-[9px] text-white rounded" value={f.caption} onChange={e => {
-                          const n = [...tempContent.feedbacks]; n[idx].caption = e.target.value; setTempContent({...tempContent, feedbacks: n});
-                        }} placeholder="Legenda" />
                         <input type="file" className="hidden" ref={el => { feedbackInputRefs.current[idx] = el; }} onChange={e => handleFileChange(e, {type: 'feedback', index: idx})} />
                         <button onClick={() => feedbackInputRefs.current[idx]?.click()} className="w-full bg-amber-500 text-black text-[9px] font-black py-2 rounded-lg">Upload Resultado</button>
                       </div>

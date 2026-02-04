@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useSite } from '../SiteContext';
 
@@ -35,26 +36,7 @@ const InstagramGallery: React.FC = () => {
                   ></iframe>
                 </div>
 
-                {/* Footer do Card */}
-                <div className="p-6 bg-black/40 backdrop-blur-md border-t border-white/5 flex flex-col items-center justify-center gap-4 flex-1">
-                   <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div>
-                      <span className="text-amber-500 text-[9px] font-black uppercase tracking-widest">Vídeo em Destaque</span>
-                   </div>
-                   <a 
-                    href={url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="w-full gold-bg text-black text-[10px] font-black py-3 px-6 rounded-xl transition-all uppercase tracking-widest text-center hover:shadow-[0_0_20px_rgba(191,149,63,0.3)] active:scale-95"
-                  >
-                    Ver no Instagram
-                  </a>
-                </div>
-
-                {/* Overlay decorativo de hover */}
-                <div className="absolute top-4 right-4 text-amber-500/50 pointer-events-none group-hover:text-amber-500 transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                </div>
+                {/* Overlay decorativo de hover removido para manter apenas o vídeo */}
               </div>
             );
           })}

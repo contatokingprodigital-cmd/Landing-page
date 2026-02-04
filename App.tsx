@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Timeline from './components/Timeline';
@@ -9,7 +9,6 @@ import Feedback from './components/Feedback';
 import PartnersCarousel from './components/PartnersCarousel';
 import FinalCTA from './components/FinalCTA';
 import Footer from './components/Footer';
-import AdminDashboard from './AdminDashboard';
 import { SiteProvider, useSite } from './SiteContext';
 import PixelInjector from './PixelInjector';
 
@@ -31,14 +30,13 @@ const SEOUpdater: React.FC = () => {
 
 const MainLandingPage: React.FC = () => {
   const { trackEvent } = useSite();
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
 
   useEffect(() => {
     trackEvent('page_view');
   }, [trackEvent]);
 
   return (
-    <div className="min-h-screen flex flex-col overflow-x-hidden bg-black text-white">
+    <div className="min-h-[100dvh] flex flex-col overflow-x-hidden bg-black text-white selection:bg-amber-500 selection:text-black">
       <Header />
       <main>
         <Hero />
@@ -49,11 +47,7 @@ const MainLandingPage: React.FC = () => {
         <Feedback />
         <FinalCTA />
       </main>
-      <Footer onAdminClick={() => setIsAdminOpen(true)} />
-      
-      {isAdminOpen && (
-        <AdminDashboard onClose={() => setIsAdminOpen(false)} />
-      )}
+      <Footer />
     </div>
   );
 };

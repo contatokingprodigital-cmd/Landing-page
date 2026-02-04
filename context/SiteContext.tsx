@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 export interface FeedbackItem {
@@ -16,6 +15,13 @@ export interface Plan {
   popular: boolean;
 }
 
+// Added missing ServiceItem interface to resolve import error in AdminDashboard.tsx
+export interface ServiceItem {
+  title: string;
+  description: string;
+  imageUrl: string;
+}
+
 export interface SiteContent {
   heroTitle: string;
   heroSubtitle: string;
@@ -25,6 +31,10 @@ export interface SiteContent {
   methodologyPersuasiveText: string;
   partnersTitle: string;
   partnerLogos: string[];
+  // Added missing service fields used by AdminDashboard.tsx
+  servicesTitle: string;
+  servicesSubtitle: string;
+  services: ServiceItem[];
   plansSectionTitle: string;
   plansSectionSubtitle: string;
   plans: Plan[];
@@ -96,6 +106,31 @@ const defaultContent: SiteContent = {
     "https://i.ibb.co/dw8SK2sz/Design-sem-nome-3.png",
     "https://i.ibb.co/WvrNbsX2/cockpit.png",
     "https://i.ibb.co/53sYPMf/Design-sem-nome.png"
+  ],
+  // Added default values for missing service fields
+  servicesTitle: "O que fazemos pelo seu negócio",
+  servicesSubtitle: "Nossa atuação vai muito além de apertar botões. Construímos o ecossistema necessário para sua escala.",
+  services: [
+    { 
+      title: "Gestão Estratégica de Tráfego", 
+      description: "Configuramos e otimizamos suas campanhas no Meta Ads (Instagram/Facebook) e Google Ads com foco total em ROI e CPA baixo.",
+      imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800"
+    },
+    { 
+      title: "Criação de Criativos", 
+      description: "Desenvolvemos anúncios magnéticos com copy persuasiva e design focado em reter a atenção do cliente.",
+      imageUrl: "https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&q=80&w=800"
+    },
+    { 
+      title: "Landing Pages", 
+      description: "Estruturamos a jornada do cliente desde o clique até a conversão final.",
+      imageUrl: "https://i.ibb.co/1YzMSN1M/Gemini-Generated-Image-b01arab01arab01a.png"
+    },
+    { 
+      title: "Relatórios Automatizados", 
+      description: "Transparencia total dos resultados para que você saiba exatamente seu lucro.",
+      imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800"
+    }
   ],
   plansSectionTitle: "Planos de Dominação Digital",
   plansSectionSubtitle: "Escolha o nível de aceleração que seu negócio precisa para escalar com lucro.",
