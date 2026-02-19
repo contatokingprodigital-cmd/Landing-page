@@ -66,7 +66,7 @@ const Hero: React.FC = () => {
             Entrar em Contato
           </a>
           <a 
-            href={content?.whatsappLink}
+            href="https://form.respondi.app/Lmp81Tfi"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackEvent('cta_specialist_hero')}

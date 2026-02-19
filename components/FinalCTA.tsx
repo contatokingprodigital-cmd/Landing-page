@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useSite } from '../SiteContext';
 
@@ -40,7 +41,7 @@ const FinalCTA: React.FC = () => {
           </p>
 
           <a 
-            href={content.whatsappLink}
+            href="https://form.respondi.app/Lmp81Tfi"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackEvent('cta_final_analysis_click')}

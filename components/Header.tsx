@@ -62,7 +62,7 @@ const Header: React.FC = () => {
         {/* CTA Button */}
         <div className="hidden lg:block">
           <a 
-            href={content.whatsappLink}
+            href="https://form.respondi.app/Lmp81Tfi"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackEvent('header_cta_click')}
@@ -108,8 +108,10 @@ const Header: React.FC = () => {
             </a>
           ))}
           <a 
-            href={content.whatsappLink}
-            className="gold-bg text-black font-black px-12 py-5 rounded-2xl uppercase tracking-widest mt-6 shadow-2xl"
+            href="https://form.respondi.app/Lmp81Tfi"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="gold-bg text-black font-black px-12 py-5 rounded-2xl uppercase tracking-widest mt-6 shadow-2xl text-center"
           >
             Consultoria Grátis
           </a>

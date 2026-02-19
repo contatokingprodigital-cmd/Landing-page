@@ -6,13 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <meta name="theme-color" content="#000000">
     
-    <!-- SEO Primário Otimizado -->
     <title>King Pro Digital | Agência de Tráfego Pago e Marketing</title>
     <meta name="description" content="Especialista em tráfego pago estratégico em Porto Alegre, Alvorada, SP, RJ e SC. King Pro Digital: a agência de marketing que escala seu faturamento.">
-    <meta name="keywords" content="king pro digital, agência de marketing, tráfego pago, porto alegre, alvorada, são paulo, santa catarina, rio de janeiro, gestor de trafego, marketing performance">
-    <meta name="author" content="King Pro Digital">
-    <meta name="robots" content="index, follow">
-
+    
     <!-- Meta Pixel Code -->
     <script>
     !function(f,b,e,v,n,t,s)
@@ -26,64 +22,9 @@
     fbq('init', '749265863771674');
     fbq('track', 'PageView');
     </script>
-    <!-- End Meta Pixel Code -->
-
-    <!-- Schema.org JSON-LD para Google (LocalBusiness) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": "King Pro Digital",
-      "image": "https://i.ibb.co/jZy4rCHY/king-logo.png",
-      "@id": "",
-      "url": "https://kingprodigital.com.br/",
-      "telephone": "+5551993781978",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Alvorada",
-        "addressRegion": "RS",
-        "addressCountry": "BR"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": -29.9961,
-        "longitude": -51.0851
-      },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday"
-        ],
-        "opens": "09:00",
-        "closes": "18:00"
-      },
-      "sameAs": [
-        "https://www.instagram.com/kingprodigital"
-      ],
-      "areaServed": ["Porto Alegre", "Alvorada", "São Paulo", "Rio de Janeiro", "Santa Catarina"]
-    }
-    </script>
-
-    <!-- Open Graph / Facebook / WhatsApp -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://kingprodigital.com.br/">
-    <meta property="og:title" content="King Pro Digital | O Melhor Tráfego Pago de Porto Alegre, Alvorada e SP">
-    <meta property="og:description" content="Especialistas em escala de vendas através de anúncios no Google e Instagram. Atendemos todo o Brasil com foco em ROI.">
-    <meta property="og:image" content="https://i.ibb.co/jZy4rCHY/king-logo.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://kingprodigital.com.br/">
-    <meta property="twitter:title" content="King Pro Digital | Tráfego Pago Estratégico">
-    <meta property="twitter:description" content="Agência de Marketing especializada em performance e tráfego pago. Porto Alegre, Alvorada, SP, RJ, SC.">
-    <meta property="twitter:image" content="https://i.ibb.co/jZy4rCHY/king-logo.png">
 
     <style>
-      body { background-color: #000; margin: 0; padding: 0; min-height: 100vh; color: white; display: flex; flex-direction: column; overflow-x: hidden; }
+      body { background-color: #000; margin: 0; padding: 0; min-height: 100vh; color: white; display: flex; flex-direction: column; overflow-x: hidden; font-family: 'Inter', sans-serif; }
       #root { flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
       #initial-loader {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -110,7 +51,10 @@
     "react-dom": "https://esm.sh/react-dom@19.0.0",
     "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/"
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "path": "https://esm.sh/path@^0.12.7",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.4"
   }
 }
 </script>
@@ -129,10 +73,6 @@
 <link rel="stylesheet" href="/index.css">
 </head>
 <body>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=749265863771674&ev=PageView&noscript=1"
-    /></noscript>
-
     <div id="initial-loader">
         <div class="spinner"></div>
         <div class="loader-text">King Pro Digital</div>
@@ -141,21 +81,6 @@
     <div id="root"></div>
 
     <script type="module" src="./index.tsx"></script>
-
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(function(registrations) {
-                for(let registration of registrations) { registration.unregister(); }
-            });
-        }
-        setTimeout(() => {
-            const loader = document.getElementById('initial-loader');
-            if (loader && loader.style.display !== 'none') {
-                loader.style.opacity = '0';
-                setTimeout(() => loader.style.display = 'none', 500);
-            }
-        }, 6000);
-    </script>
 <script type="module" src="/index.tsx"></script>
 </body>
 </html>
