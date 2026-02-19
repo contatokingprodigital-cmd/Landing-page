@@ -72,7 +72,7 @@ const Hero: React.FC = () => {
             onClick={() => trackEvent('cta_specialist_hero')}
             className="border-2 border-white/20 text-white text-sm md:text-lg font-bold px-8 md:px-12 py-4 md:py-5 rounded-2xl hover:bg-white/5 transition-all inline-flex items-center justify-center w-full sm:w-[320px] uppercase tracking-widest"
           >
-            Falar com especialista
+            Consultoria grátis
           </a>
         </div>
 

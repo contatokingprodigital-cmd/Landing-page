@@ -68,7 +68,7 @@ const Header: React.FC = () => {
             onClick={() => trackEvent('header_cta_click')}
             className={`text-[10px] font-black px-8 py-3 rounded-full uppercase tracking-widest transition-all duration-500 transform active:scale-95 gold-bg text-black shadow-lg hover:brightness-110`}
           >
-            Falar com Especialista
+            Consultoria Grátis
           </a>
         </div>
 
@@ -111,7 +111,7 @@ const Header: React.FC = () => {
             href={content.whatsappLink}
             className="gold-bg text-black font-black px-12 py-5 rounded-2xl uppercase tracking-widest mt-6 shadow-2xl"
           >
-            Análise Gratuita
+            Consultoria Grátis
           </a>
         </div>
       </div>
